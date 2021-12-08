@@ -1,0 +1,13 @@
+Installation of Samurai
+
+  Copyright (c) 2014-2021 Joan Sala Soler
+
+  Copying and distribution of this file, with or without modification,
+  are permitted in any medium without royalty provided the copyright
+  notice and this notice are preserved.
+
+Basic installation
+======================================================================
+
+You may check Apache Maven documentation for instructions on how to
+build and intall this software.
