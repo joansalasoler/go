@@ -1,8 +1,8 @@
-package com.joansala.game.go;
+package com.joansala.test.game.go;
 
 import org.junit.jupiter.api.*;
 import com.joansala.engine.Game;
-import com.joansala.engine.GameContract;
+import com.joansala.test.engine.GameContract;
 import com.joansala.game.go.GoGame;
 
 
