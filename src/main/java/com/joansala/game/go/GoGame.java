@@ -29,7 +29,7 @@ import static com.joansala.game.go.Go.*;
 
 
 /**
- * Reperesents a Go game between two players.
+ * Represents a Go game between two players.
  */
 public class GoGame extends BaseGame {
 

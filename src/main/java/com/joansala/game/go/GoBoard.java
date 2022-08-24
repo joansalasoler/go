@@ -29,7 +29,7 @@ import static com.joansala.game.go.GoGame.*;
 
 
 /**
- * Represents a othello board.
+ * Represents a Go board.
  */
 public class GoBoard extends BaseBoard<Bitset[]> {
 
