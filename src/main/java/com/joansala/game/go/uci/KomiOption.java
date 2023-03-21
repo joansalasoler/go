@@ -39,7 +39,7 @@ public class KomiOption extends SpinOption {
      * {@inheritDoc}
      */
     public void handle(UCIService service, int value) {
-        GoGame game = (GoGame) service.getGame();
+        GoGame game = (GoGame) service.getGame().cast();
         double n = (double) value / 36100.0D;
         int score = (int) (n * game.infinity());
         service.debug("Komi score is now " + score + " (" + value + " cp)");
