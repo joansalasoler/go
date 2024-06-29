@@ -39,15 +39,25 @@
   <!-- Project properties =============================================== -->
 
   <properties>
-    <revision>1.0.0-SNAPSHOT</revision>
+    <revision>1.2.0-SNAPSHOT</revision>
     <maven.test.skip>true</maven.test.skip>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <project.name>Samurai Go</project.name>
-    <samurai.version>1.1.0-SNAPSHOT</samurai.version>
+    <samurai.version>1.2.0-SNAPSHOT</samurai.version>
   </properties>
+
+  <!-- External repositories ============================================ -->
+
+  <repositories>
+    <repository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/joansalasoler/samurai</url>
+    </repository>
+  </repositories>
 
   <!-- Build configuration ============================================== -->
 
