@@ -1,6 +1,5 @@
 package com.joansala.test.game.go;
 
-import java.io.FileInputStream;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.*;
 import com.joansala.engine.Board;
@@ -14,7 +13,7 @@ import com.joansala.util.suites.SuiteReader;
 public class GoBoardTest implements BoardContract {
 
     /** Test suite file path */
-    private static String SUITE_PATH = "/go-bench.suite";
+    private static String SUITE_PATH = "go-bench.suite";
 
 
     /**
@@ -30,19 +29,8 @@ public class GoBoardTest implements BoardContract {
      * Stream of game suites to test.
      */
     public static Stream<Suite> suites() throws Exception {
-        String path = getResourcePath(SUITE_PATH);
-        FileInputStream input = new FileInputStream(path);
-        SuiteReader reader = new SuiteReader(input);
-
+        SuiteReader reader = new SuiteReader(SUITE_PATH);
         return reader.stream().onClose(() -> close(reader));
-    }
-
-
-    /**
-     * Obtain a path to the given resource file.
-     */
-    private static String getResourcePath(String path) {
-        return BoardContract.class.getResource(path).getFile();
     }
 
 
