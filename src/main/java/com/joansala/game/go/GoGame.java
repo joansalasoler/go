@@ -280,7 +280,7 @@ public class GoGame extends BaseGame {
      * @return      If a repetition occurred
      */
     private boolean isRepetition() {
-        for (int n = index; n >= 0; n--) {
+        for (int n = index - 1; n >= 0; n--) {
             if (moves[n] != FORFEIT_MOVE) {
                 if (hashes[n] == this.hash) {
                     return true;
