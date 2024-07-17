@@ -21,10 +21,14 @@ package com.joansala.game.go;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicLong;
 import com.joansala.engine.Board;
+import com.joansala.engine.Scorer;
 import com.joansala.engine.base.BaseGame;
 import com.joansala.util.hash.ZobristHash;
 import com.joansala.util.bits.Bitset;
+import com.joansala.game.go.Go.Player;
 import com.joansala.game.go.attacks.Point;
+import com.joansala.game.go.scorers.AreaScorer;
+
 import static com.joansala.game.go.Go.*;
 
 
@@ -41,6 +45,9 @@ public class GoGame extends BaseGame {
 
     /** Capacity increases at least this value each time */
     private static final int CAPACITY_INCREMENT = 128;
+
+    /** Heuristic evaluation function */
+    private static final Scorer<GoGame> scorer = scoreFunction();
 
     /** Hash code generator */
     private static final ZobristHash hasher = hashFunction();
@@ -225,7 +232,7 @@ public class GoGame extends BaseGame {
     /**
      * Check if it is a forfeit move identifier.
      */
-    private boolean isForfeit(int move) {
+    public boolean isForfeit(int move) {
         return move == FORFEIT_MOVE;
     }
 
@@ -233,7 +240,7 @@ public class GoGame extends BaseGame {
     /**
      * Check if a move targets the current Ko point.
      */
-    private boolean isKoPoint(int move) {
+    public boolean isKoPoint(int move) {
         return move == kopoint;
     }
 
@@ -241,7 +248,7 @@ public class GoGame extends BaseGame {
     /**
      * Check if an intersection does not contain any stones.
      */
-    private boolean isEmptyPoint(int index) {
+    public boolean isEmptyPoint(int index) {
        return !state[BLACK].contains(index) &&
               !state[WHITE].contains(index);
     }
@@ -293,6 +300,26 @@ public class GoGame extends BaseGame {
 
 
     /**
+     * Obtain the current bitboard on the given index.
+     *
+     * @return      Bitboard
+     */
+    public final Bitset state(int index) {
+        return state[index];
+    }
+
+
+    /**
+     * Current game state reference.
+     *
+     * @return      A game state
+     */
+    protected Bitset[] state() {
+        return state;
+    }
+
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -315,11 +342,9 @@ public class GoGame extends BaseGame {
      */
     @Override
     public int outcome() {
-        final int[] scores = computeScores();
-        final int black = scores[BLACK];
-        final int white = scores[WHITE] + komi;
-        if (black < white) return -MAX_SCORE;
-        if (black > white) return MAX_SCORE;
+        int score = scorer.evaluate(this) + komi;
+        if (score < DRAW_SCORE) return -MAX_SCORE;
+        if (score > DRAW_SCORE) return MAX_SCORE;
         return DRAW_SCORE;
     }
 
@@ -329,8 +354,7 @@ public class GoGame extends BaseGame {
      */
     @Override
     public int score() {
-        final int[] scores = computeScores();
-        return scores[BLACK] - (scores[WHITE] + komi);
+        return scorer.evaluate(this) + komi;
     }
 
 
@@ -507,66 +531,6 @@ public class GoGame extends BaseGame {
             }
         }
     }
-    /**
-     * Compute the current score of the players.
-     *
-     * This includes, for each player, the number of stones of that color
-     * plus the number of intersections on an empty area that is surrounded
-     * only by stones of that single color.
-     *
-     * @return          Accumulated scores for each player
-     */
-    private int[] computeScores() {
-        int empties = 0;
-        int[] scores = new int[2];
-        Bitset areas = new Bitset(BITSET_SIZE);
-
-        scores[BLACK] = state[BLACK].count();
-        scores[WHITE] = state[WHITE].count();
-
-        for (int point = 0; point < BOARD_SIZE; point++) {
-            if (!areas.contains(point) && isEmptyPoint(point)) {
-                int[] counts = new int[2];
-                areas(areas, counts, point);
-                int count = areas.count() - empties;
-                empties += count;
-
-                if (counts[BLACK] == 0) {
-                    scores[WHITE] += count;
-                } else if (counts[WHITE] == 0) {
-                    scores[BLACK] += count;
-                }
-            }
-        }
-
-        return scores;
-    }
-
-
-    /**
-     * Fills a bitboard with a chain of empty intersections starting
-     * at the given point and counts the neighbors of each color.
-     * Notice that a neighbor stone may be counted multiple times.
-     *
-     * @param areas     Bitset to fill
-     * @param counts    Array where counts are added
-     * @param point     Empty start point
-     */
-    private void areas(Bitset areas, int[] counts, int point) {
-        areas.insert(point);
-
-        for (int neighbor : Point.attacks(point)) {
-            if (areas.contains(neighbor) == false) {
-                if (state[BLACK].contains(neighbor)) {
-                    counts[BLACK]++;
-                } else if (state[WHITE].contains(neighbor)) {
-                    counts[WHITE]++;
-                } else {
-                    areas(areas, counts, neighbor);
-                }
-            }
-        }
-    }
 
 
     /**
@@ -638,6 +602,14 @@ public class GoGame extends BaseGame {
 
             System.gc();
         }
+    }
+
+
+    /**
+     * Initialize the heuristic evaluation function.
+     */
+    private static Scorer<GoGame> scoreFunction() {
+        return new AreaScorer();
     }
 
 

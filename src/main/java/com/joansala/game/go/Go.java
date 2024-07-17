@@ -26,66 +26,66 @@ import com.joansala.util.bits.Bitset;
 /**
  * Definitions for Go.
  */
-final class Go {
+public final class Go {
 
     // -------------------------------------------------------------------
     // Game logic constants
     // -------------------------------------------------------------------
 
     /** Number of intersections on the board */
-    static final int BOARD_SIZE = 361;
+    public static final int BOARD_SIZE = 361;
 
     /** Number of rows on the board */
-    static final int BOARD_RANKS = 19;
+    public static final int BOARD_RANKS = 19;
 
     /** Number of columns on the board */
-    static final int BOARD_FILES = 19;
+    public static final int BOARD_FILES = 19;
 
     /** Number of distinc stones */
-    static final int PIECE_COUNT = 2;
+    public static final int PIECE_COUNT = 2;
 
     /** Number of words on each bitset */
-    static final int BITSET_SIZE = 6;
+    public static final int BITSET_SIZE = 6;
 
     /** Player fortfeits its turn */
-    static final int FORFEIT_MOVE = 361;
+    public static final int FORFEIT_MOVE = 361;
 
     // -------------------------------------------------------------------
     // Board representation
     // -------------------------------------------------------------------
 
     /** South player name */
-    static final String SOUTH_NAME = "Black";
+    public static final String SOUTH_NAME = "Black";
 
     /** North player name */
-    static final String NORTH_NAME = "White";
+    public static final String NORTH_NAME = "White";
 
     /** South player symbol */
-    static final char SOUTH_SYMBOL = 'b';
+    public static final char SOUTH_SYMBOL = 'b';
 
     /** North player symbol */
-    static final char NORTH_SYMBOL = 'w';
+    public static final char NORTH_SYMBOL = 'w';
 
     /** Empty intersection symbol */
-    static final char EMPTY_SYMBOL = '·';
+    public static final char EMPTY_SYMBOL = '·';
 
     /** Empty star point symbol */
-    static final char STAR_SYMBOL = '+';
+    public static final char STAR_SYMBOL = '+';
 
     // -------------------------------------------------------------------
     // Piece indices
     // -------------------------------------------------------------------
 
-    static final int BLACK =  0;
-    static final int WHITE =  1;
+    public static final int BLACK =  0;
+    public static final int WHITE =  1;
 
     // -------------------------------------------------------------------
     // Zobrist hashing
     // -------------------------------------------------------------------
 
-    static final long RANDOM_SEED = 0x6622E46E1DB096FAL;
-    static final long WHITE_SIGN =  0x506AACF489889342L;
-    static final long BLACK_SIGN =  0xD2B7ADEEDED1F73FL;
+    public static final long RANDOM_SEED = 0x6622E46E1DB096FAL;
+    public static final long WHITE_SIGN =  0x506AACF489889342L;
+    public static final long BLACK_SIGN =  0xD2B7ADEEDED1F73FL;
 
     // -------------------------------------------------------------------
     // Board definitions
