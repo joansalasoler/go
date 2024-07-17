@@ -37,9 +37,6 @@ import static com.joansala.game.go.Go.*;
  */
 public class GoGame extends BaseGame {
 
-    /** Recommended score to evaluate draws */
-    public static final int CONTEMPT_SCORE = 0;
-
     /** Maximum number of plies this object can store */
     public static final int MAX_CAPACITY = Integer.MAX_VALUE / (BITSET_SIZE << 1);
 
@@ -83,7 +80,7 @@ public class GoGame extends BaseGame {
     private int kopoint;
 
     /** Compensation score for white */
-    private int komi;
+    private int komi = DEFAULT_KOMI;
 
 
     /**
@@ -332,8 +329,36 @@ public class GoGame extends BaseGame {
      * {@inheritDoc}
      */
     @Override
+    public int infinity() {
+        return INFINITY_SCORE;
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int winner() {
+        final int score = outcome();
+
+        if (score == INFINITY_SCORE) {
+            return SOUTH;
+        }
+
+        if (score == -INFINITY_SCORE) {
+            return NORTH;
+        }
+
+        return DRAW;
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public int toCentiPawns(int score) {
-        return BOARD_SIZE * (score / 10);
+        return score;
     }
 
 
@@ -342,9 +367,9 @@ public class GoGame extends BaseGame {
      */
     @Override
     public int outcome() {
-        int score = scorer.evaluate(this) + komi;
-        if (score < DRAW_SCORE) return -MAX_SCORE;
-        if (score > DRAW_SCORE) return MAX_SCORE;
+        int score = scorer.evaluate(this) - komi;
+        if (score < DRAW_SCORE) return -INFINITY_SCORE;
+        if (score > DRAW_SCORE) return INFINITY_SCORE;
         return DRAW_SCORE;
     }
 
@@ -354,7 +379,7 @@ public class GoGame extends BaseGame {
      */
     @Override
     public int score() {
-        return scorer.evaluate(this) + komi;
+        return scorer.evaluate(this) - komi;
     }
 
 

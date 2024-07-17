@@ -20,6 +20,7 @@ package com.joansala.game.go.uci;
 import com.joansala.uci.UCIService;
 import com.joansala.uci.util.SpinOption;
 import com.joansala.game.go.GoGame;
+import static com.joansala.game.go.Go.*;
 
 
 /**
@@ -31,7 +32,16 @@ public class KomiOption extends SpinOption {
      * Creates a new option instance.
      */
     public KomiOption() {
-        super(650, 0, 36000);
+        super(DEFAULT_KOMI, 0, INFINITY_SCORE - STONE_SCORE);
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public void initialize(UCIService service) {
+        GoGame game = (GoGame) service.getGame().cast();
+        game.setKomiScore(DEFAULT_KOMI);
     }
 
 
@@ -40,9 +50,7 @@ public class KomiOption extends SpinOption {
      */
     public void handle(UCIService service, int value) {
         GoGame game = (GoGame) service.getGame().cast();
-        double n = (double) value / 36100.0D;
-        int score = (int) (n * game.infinity());
-        service.debug("Komi score is now " + score + " (" + value + " cp)");
-        game.setKomiScore(score);
+        service.debug("Komi score is now " + value + " cp");
+        game.setKomiScore(value);
     }
 }

@@ -61,7 +61,7 @@ public final class AreaScorer implements Scorer<GoGame> {
             }
         }
 
-        return black - white;
+        return STONE_SCORE * (black - white);
     }
 
 

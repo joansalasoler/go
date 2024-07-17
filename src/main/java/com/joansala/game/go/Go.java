@@ -88,6 +88,22 @@ public final class Go {
     public static final long BLACK_SIGN =  0xD2B7ADEEDED1F73FL;
 
     // -------------------------------------------------------------------
+    // Evaluation scores
+    // -------------------------------------------------------------------
+
+    /** Maximum score to which states are evaluated */
+    public static final int INFINITY_SCORE = 36100;
+
+    /** Recommended score to evaluate draws */
+    public static final int CONTEMPT_SCORE = 0;
+
+    /** Default Komi score (compensation for white) */
+    public static final int DEFAULT_KOMI = 650;
+
+    /** Value of each stone */
+    public static final int STONE_SCORE = 100;
+
+    // -------------------------------------------------------------------
     // Board definitions
     // -------------------------------------------------------------------
 
