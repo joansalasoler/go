@@ -109,7 +109,7 @@ public class GoBoard extends BaseBoard<Bitset[]> {
      * {@inheritDoc}
      */
     @Override
-    public int toMove(String notation) {
+    public int parseCoordinates(String notation) {
         return algebraic.toIndex(notation);
     }
 
@@ -127,7 +127,7 @@ public class GoBoard extends BaseBoard<Bitset[]> {
      * {@inheritDoc}
      */
     @Override
-    public GoBoard toBoard(String notation) {
+    public GoBoard fromDiagram(String notation) {
         String[] fields = notation.split(" ");
 
         Bitset[] position = toPosition(fen.toArray(fields[0]));

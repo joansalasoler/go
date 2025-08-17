@@ -102,7 +102,7 @@ public class GoGame extends BaseGame {
         kopoints = new int[capacity];
         hashes = new long[capacity];
         states = new long[capacity * BITSET_SIZE << 1];
-        setBoard(new GoBoard());
+        setStartingBoard(new GoBoard());
     }
 
 
@@ -119,7 +119,7 @@ public class GoGame extends BaseGame {
      * {@inheritDoc}
      */
     @Override
-    public Board getBoard() {
+    public Board getStartingBoard() {
         return board;
     }
 
@@ -128,15 +128,15 @@ public class GoGame extends BaseGame {
      * {@inheritDoc}
      */
     @Override
-    public void setBoard(Board board) {
-        setBoard((GoBoard) board);
+    public void setStartingBoard(Board board) {
+        setStartingBoard((GoBoard) board);
     }
 
 
     /**
-     * {@see #setBoard(Board)}
+     * {@see #setStartingBoard(Board)}
      */
-    public void setBoard(GoBoard board) {
+    public void setStartingBoard(GoBoard board) {
         this.index = -1;
         this.board = board;
         this.move = NULL_MOVE;
@@ -187,7 +187,7 @@ public class GoGame extends BaseGame {
      * {@inheritDoc}
      */
     @Override
-    public GoBoard toBoard() {
+    public GoBoard getCurrentBoard() {
         return new GoBoard(state, turn);
     }
 
