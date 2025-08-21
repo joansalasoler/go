@@ -3,8 +3,10 @@ package com.joansala.test.game.go;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.*;
 import com.joansala.engine.Board;
+import com.joansala.engine.Game;
 import com.joansala.test.engine.BoardContract;
 import com.joansala.game.go.GoBoard;
+import com.joansala.game.go.GoGame;
 import com.joansala.util.suites.Suite;
 import com.joansala.util.suites.SuiteReader;
 
@@ -20,8 +22,17 @@ public class GoBoardTest implements BoardContract {
      * {@inheritDoc}
      */
     @Override
-    public Board newInstance() {
+    public Board newBoard() {
         return new GoBoard();
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Game newGame() {
+        return new GoGame();
     }
 
 

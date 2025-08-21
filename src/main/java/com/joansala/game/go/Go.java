@@ -92,7 +92,7 @@ public final class Go {
     // -------------------------------------------------------------------
 
     /** Maximum score to which states are evaluated */
-    public static final int INFINITY_SCORE = 36100;
+    public static final int INFINITY_SCORE = 50000;
 
     /** Recommended score to evaluate draws */
     public static final int CONTEMPT_SCORE = 0;

@@ -24,6 +24,7 @@ import com.joansala.util.bits.Bitset;
 import com.joansala.util.bits.BitsetConverter;
 import com.joansala.util.notation.CoordinateConverter;
 import com.joansala.util.notation.DiagramConverter;
+
 import static com.joansala.game.go.Go.*;
 import static com.joansala.game.go.GoGame.*;
 
@@ -259,6 +260,16 @@ public class GoBoard extends BaseBoard<Bitset[]> {
         }
 
         return state;
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public long hash() {
+        Player player = (turn == SOUTH) ? Player.SOUTH : Player.NORTH;
+        return GoGame.computeHash(player, position);
     }
 
 
