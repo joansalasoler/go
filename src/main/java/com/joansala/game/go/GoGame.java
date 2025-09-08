@@ -188,7 +188,7 @@ public class GoGame extends BaseGame {
      */
     @Override
     public GoBoard getCurrentBoard() {
-        return new GoBoard(state, turn);
+        return new GoBoard(state, player.turn);
     }
 
 
